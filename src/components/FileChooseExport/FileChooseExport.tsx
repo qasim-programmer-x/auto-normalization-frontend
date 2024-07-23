@@ -141,7 +141,7 @@ export const FileChooseExport: React.FC = () => {
         }
       }
       console.log(message);
-      const response = await axios.post("http://localhost:8080/api/normalize", {
+      const response = await axios.post(`${url}/normalize`, {
         message: message,
       });
       console.log("response");
@@ -156,20 +156,25 @@ export const FileChooseExport: React.FC = () => {
   };
 
   const handleAnalyse = async () => {
-    console.log(rows.slice(1));
-    const requestData = {
-      headers: rows[0],
-      rows: rows.slice(1),
-    };
-    const response = await axios.post(`${url}/normalize/analyses`, requestData);
-    console.log(response.data);
-    setAnalyses(response.data);
+    try {
+      console.log(rows.slice(1));
+      const requestData = {
+        headers: rows[0],
+        rows: rows.slice(1),
+      };
+      const response = await axios.post(`${url}/normalize/analyses`, requestData);
+      console.log(response.data);
+      setAnalyses(response.data);
+    } catch (err: any) {
+      alert(err);
+      console.error(err);
+    }
   };
 
   const handleSQLGeneration = async () => {
     try {
       setSqlGenLoading(true);
-      const responseSQL = await axios.post("http://localhost:8080/api/generate-sql", {
+      const responseSQL = await axios.post(`${url}/generate-sql`, {
         data: JSON.stringify(response),
         sqlLang: sqlLang,
       });
