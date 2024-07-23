@@ -160,7 +160,7 @@ export const FileChooseExport: React.FC = () => {
       console.log(rows.slice(1));
       const requestData = {
         headers: rows[0],
-        rows: rows.slice(1),
+        rows: rows.slice(1, 71),
       };
       const response = await axios.post(`${url}/normalize/analyses`, requestData);
       console.log(response.data);
